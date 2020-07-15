@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Employees</title>
+    <!-- Imports -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Javascripts -->
+    <script src="tests.js"></script>
+</head>
+<body>
+    <h1>Company employees</h1>
+    <div>
+        <h2>Show employees</h2>
+        <div><button onclick="show_employees()">Show</button></div>
+        <div><label id="show_all"></label></div>
+    </div>
+    <div>
+        <h2>Create a new employee</h2>
+        <div>Name <input id="Name" /></div>
+        <div>Surname <input id="Surname" /></div>
+        <div>Job <input id="Job" /></div>
+        <div>Salary <input id="Salary" /></div>
+        <div><button onclick="new_employee()">Create</button></div>
+        <div><label id="show_new"></label></div>
+    </div>
+</body>
+</html>
