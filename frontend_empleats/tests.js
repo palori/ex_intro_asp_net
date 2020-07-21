@@ -1,4 +1,4 @@
-var BASE_URL = "https://localhost:5001/api/empleats/";
+var BASE_URL = "http://localhost:5000/api/empleats";
 
 // check this to enable CORS policy from same origin
 // https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.1
@@ -24,10 +24,17 @@ function show_employees() {
     });
 }
 
+function clear_fields() {
+    document.getElementById("Name").value = "";
+    document.getElementById("Surname").value = "";
+    document.getElementById("Job").value = "";
+    document.getElementById("Salary").value = "";
+}
+
 function new_employee() {
     var nom = document.getElementById("Name").value;
     var cognom = document.getElementById("Surname").value;
-    var carrec = document.getElementById("Job").value
+    var carrec = document.getElementById("Job").value;
     var sou = document.getElementById("Salary").value;
     if (nom == "" || cognom == "" || carrec == "" || sou == ""){
         alert("Please, fill all the fields :)");
@@ -35,7 +42,7 @@ function new_employee() {
     else{
         sou = parseFloat(sou);
         if (isNaN(sou)) sou = 0.0;
-        console.log("sou: " + sou);
+        //console.log("sou: " + sou);
         var data = {
             "Name": nom,
             "Cognom": cognom,

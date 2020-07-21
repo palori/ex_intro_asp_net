@@ -13,6 +13,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;    // added
 using empleats.Models;                  // added
 
+
+// Source CORS: https://docs.microsoft.com/es-es/aspnet/core/security/cors?view=aspnetcore-3.1
+
 namespace empleats
 {
     public class Startup
@@ -24,11 +27,33 @@ namespace empleats
 
         public IConfiguration Configuration { get; }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins"; // added
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<EmpleatsContext>(opt =>
-               opt.UseInMemoryDatabase("EmpleatsList"));       // added
+            services.AddCors(options =>                                 // added
+            {
+                options.AddPolicy(
+                    name: MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        /*builder.WithOrigins("http://localhost:5000/api/empleat",
+                                            "http://localhost:5000/api/empleats",
+                                            "https://localhost:5001/api/empleat",
+                                            "https://localhost:5001/api/empleats")
+                                .AllowAnyHeader();*/
+                        /*builder.WithOrigins("http://localhost:5000",
+                                            "https://localhost:5001")
+                                .AllowAnyHeader();*/
+                        builder.WithOrigins("*")
+                               .AllowAnyHeader();
+                    });
+            });
+
+            services.AddDbContext<EmpleatsContext>(opt =>               // added
+               opt.UseInMemoryDatabase("EmpleatsList"));
+            
             services.AddControllers();
         }
 
@@ -42,13 +67,28 @@ namespace empleats
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();               // added
+
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);                      // added
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                /*endpoints.MapGet("/echo",
+                    context => context.Response.WriteAsync("echo"))
+                    .RequireCors(MyAllowSpecificOrigins);           // added
+                */
                 endpoints.MapControllers();
+                         //.RequireCors(MyAllowSpecificOrigins);      // added (only this line)
+                /*
+                endpoints.MapGet("/echo2",
+                context => context.Response.WriteAsync("echo2"));   // added
+
+                endpoints.MapRazorPages();                          // added
+                */
             });
         }
     }

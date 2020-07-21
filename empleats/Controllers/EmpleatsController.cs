@@ -22,6 +22,7 @@ namespace empleats.Controllers
         }
 
         // GET: api/Empleats
+        //[EnableCors("_myAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Empleat>>> GetEmpleats()
         {
@@ -29,6 +30,7 @@ namespace empleats.Controllers
         }
 
         // GET: api/Empleats/5
+        //[EnableCors("_myAllowSpecificOrigins")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Empleat>> GetEmpleat(int id)
         {
@@ -45,6 +47,7 @@ namespace empleats.Controllers
         // PUT: api/Empleats/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        //[EnableCors("_myAllowSpecificOrigins")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmpleat(int id, Empleat empleat)
         {
@@ -77,6 +80,7 @@ namespace empleats.Controllers
         // POST: api/Empleats
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        //[EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
         public async Task<ActionResult<Empleat>> PostEmpleat(Empleat empleat)
         {
@@ -87,6 +91,7 @@ namespace empleats.Controllers
         }
 
         // DELETE: api/Empleats/5
+        //[EnableCors("_myAllowSpecificOrigins")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Empleat>> DeleteEmpleat(int id)
         {
