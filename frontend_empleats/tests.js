@@ -1,4 +1,5 @@
-var BASE_URL = "http://localhost:5000/api/empleats";
+var BASE_URL = "https://localhost:5001/api/empleats";
+//var BASE_URL = "http://localhost:5000/api/empleats";
 
 // check this to enable CORS policy from same origin
 // https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.1
@@ -11,14 +12,17 @@ function show_employees() {
         url: BASE_URL,
         //data: data,
         success:
+        //complete: // mostra molta mes info que el success (inclou: dades enviades...)
         function (response) {
-            alert("Ha funcionado");
-            //var lab = document.getElementById("show_all");
-            //lab.value = response;
+            //alert("Ha funcionado");
+            var json = JSON.stringify(response);
+            //console.log("JSON: "+json);
+            document.getElementById("show_all").innerHTML = json;
         },
         error:
         function (error) {
             console.log(error);
+            alert("El servidor no està actiu.");
         },
         dataType: "json"
     });
@@ -44,14 +48,14 @@ function new_employee() {
         if (isNaN(sou)) sou = 0.0;
         //console.log("sou: " + sou);
         var data = {
-            "Name": nom,
+            "Nom": nom,
             "Cognom": cognom,
             "Carrec": carrec,
             "Sou": sou
         };
 
         /*var data = {          // test data
-            "Name": "hola",
+            "Nom": "hola",
             "Cognom": "hola2",
             "Carrec": "hola3",
             "Sou": 10.2
@@ -60,16 +64,27 @@ function new_employee() {
         $.ajax({
             type: "POST",
             url: BASE_URL,
-            data: data,
+            data: JSON.stringify(data),
+            complete:
+            function (response) {
+                var json = JSON.stringify(response);
+                console.log("JSON: "+json);
+            },
             success:
             function (response) {
-                alert("Ha funcionado");
+                var json = JSON.stringify(response);
+                console.log("JSON: "+json);
+                alert("Ha funcionado!\n"+json);
             },
             error:
             function (error) {
                 console.log(error);
             },
-            dataType: "json"
+            dataType: "json",
+            headers: {                              // sense dona 415
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         });
     }
     
